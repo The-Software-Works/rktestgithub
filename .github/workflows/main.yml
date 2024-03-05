@@ -34,7 +34,6 @@ jobs:
         run: |
           echo "::set-env name=ADMIN_USERNAME::${{ secrets.ADMIN_USERNAME }}"
           echo "::set-env name=ADMIN_PASSWORD::${{ secrets.ADMIN_PASSWORD }}"
-        
        
       - name: Terraform Init
         run: terraform init -reconfigure 
