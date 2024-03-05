@@ -32,8 +32,8 @@ jobs:
 
       - name: Set environment variables
         run: |
-          echo "::set-env name=ADMIN_USERNAME::${{ secrets.ADMIN_USERNAME }}"
-          echo "::set-env name=ADMIN_PASSWORD::${{ secrets.ADMIN_PASSWORD }}"
+          echo "ADMIN_USERNAME=${{ secrets.ADMIN_USERNAME }}" >> $GITHUB_ENV
+          echo "ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }}" >> $GITHUB_ENV
        
       - name: Terraform Init
         run: terraform init -reconfigure 
