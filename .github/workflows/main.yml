@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+env:
+  ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
+  ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}      
+
 jobs:
   terraform:
     name: Terraform
@@ -20,11 +24,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set Terraform debug log level
-        run: |
-          export TF_LOG=DEBUG
-          echo "Terraform debug log level set to DEBUG"
-
+      
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1
         with:
@@ -35,10 +35,10 @@ jobs:
           az login --service-principal --username $ARM_CLIENT_ID --password $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
           az account set --subscription $ARM_SUBSCRIPTION_ID
 
-      - name: Set environment variables
-        run: |
-          echo "ADMIN_USERNAME=${{ secrets.ADMIN_USERNAME }}" >> $GITHUB_ENV
-          echo "ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }}" >> $GITHUB_ENV
+      # - name: Set environment variables
+      #   run: |
+      #     echo "ADMIN_USERNAME=${{ secrets.ADMIN_USERNAME }}" >> $GITHUB_ENV
+      #     echo "ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }}" >> $GITHUB_ENV
        
       - name: Terraform Init
         run: terraform init -reconfigure 
