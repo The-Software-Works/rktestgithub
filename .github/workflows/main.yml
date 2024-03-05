@@ -39,7 +39,9 @@ jobs:
         run: terraform init -reconfigure 
      
       - name: Terraform Plan
-        run: terraform plan
+        run: |
+          terraform init -reconfigure
+          terraform plan -var-file=./config.tfvars
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
