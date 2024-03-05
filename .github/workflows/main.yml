@@ -1,0 +1,47 @@
+name: Terraform Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  terraform:
+    name: Terraform
+    runs-on: ubuntu-latest
+    env:
+        ARM_CLIENT_ID: "f938191a-7cd1-4d92-a9e6-e13f894733b4"
+        ARM_CLIENT_SECRET: "m5Y8Q~egfXXleMkS1FCF.xkVhSYL6VX_.5MuTbYt"
+        ARM_SUBSCRIPTION_ID: "fce9ba8e-40b4-4ae1-bb2a-faa0bc87377b"
+        ARM_TENANT_ID: "dd559b05-19eb-4957-af73-9ee420d71796"
+
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.7.4
+      - name: Azure Login
+        run: |
+          
+          az login --service-principal --username $ARM_CLIENT_ID --password $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
+          az account set --subscription $ARM_SUBSCRIPTION_ID
+
+      - name: Set environment variables
+        run: |
+          echo "::set-env name=ADMIN_USERNAME::${{ secrets.ADMIN_USERNAME }}"
+          echo "::set-env name=ADMIN_PASSWORD::${{ secrets.ADMIN_PASSWORD }}"
+        
+       
+      - name: Terraform Init
+        run: terraform init -reconfigure 
+     
+      - name: Terraform Plan
+        run: terraform plan
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+        
