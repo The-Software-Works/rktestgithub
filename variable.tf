@@ -27,9 +27,13 @@ variable "vm_size" {
 }
 
 
+
 variable "vnet_name" {
   
 }
+
+
+
 
 variable "admin_username" {
   
@@ -38,4 +42,5 @@ variable "admin_username" {
 variable "admin_password" {
   
 }
+
 

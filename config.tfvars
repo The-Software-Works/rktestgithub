@@ -12,8 +12,10 @@ resource_group_name = "mygitenvrg"
 # VM configuration
 vm_name             = "myVM"
 vm_size             = "Standard_DS1_v2"
-#admin_username      = "adminuser"
-#admin_password      = "P@ssw0rd1234"  # It's advisable to use environment variables for sensitive data like passwords.
+
+
+admin_username      = "adminuser"
+admin_password      = "P@ssw0rd1234"  # It's advisable to use environment variables for sensitive data like passwords.
 
 # Network configuration
 vnet_name           = "myVNet"
